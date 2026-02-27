@@ -3,48 +3,43 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-/// <summary>
-/// This script defines which sprite the 'Player" uses and its health.
-/// </summary>
-
 public class Player : MonoBehaviour
 {
     public GameObject destructionFX;
 
-    public static Player instance; 
+    // 👇 thêm biến GameOver UI
+    public GameObject gameOverUI;
+
+    public static Player instance;
 
     private void Awake()
     {
-        if (instance == null) 
+        if (instance == null)
             instance = this;
     }
 
-    //method for damage proceccing by 'Player'
-    public void GetDamage(int damage)   
+    // method for damage processing
+    public void GetDamage(int damage)
     {
         Destruction();
-    }    
+    }
 
-    //'Player's' destruction procedure
+    // Player destruction procedure
     void Destruction()
     {
-        Instantiate(destructionFX, transform.position, Quaternion.identity); //generating destruction visual effect and destroying the 'Player' object
+        // tạo hiệu ứng nổ
+        Instantiate(destructionFX, transform.position, Quaternion.identity);
+
+        // 👇 hiện Game Over
+        if (gameOverUI != null)
+        {
+            gameOverUI.SetActive(true);
+        }
+
+        // 👇 dừng game
+        Time.timeScale = 0f;
+
+        // xoá player
         Destroy(gameObject);
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
